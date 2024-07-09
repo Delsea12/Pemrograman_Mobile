@@ -1,7 +1,12 @@
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_books_app/book_list.dart';
+// import 'package:simple_books_app/firebase_options.dart';
 
 void main() {
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
   runApp(const MyApp());
 }
 
@@ -19,8 +24,8 @@ class MyApp extends StatelessWidget {
         bookTitles: [
           'Poetry',
           'Self Improvement',
-          'Horor',
-          'Hostorical Fiction',
+          'Horror',
+          'Historical Fiction',
           'Short Story',
           'Philosophy',
           'Humor',
@@ -28,8 +33,8 @@ class MyApp extends StatelessWidget {
           'Astrology',
           'Astronomy',
         ],
-        imagePath: 'assets/images', // Memberikan nilai imagePath
-        imageHeight: 100, // Memberikan nilai imageHeight
+        imagePath: 'assets/images',
+        imageHeight: 100,
       ),
     );
   }
