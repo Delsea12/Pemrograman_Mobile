@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class BookDetailPage extends StatefulWidget {
   final String bookTitle;
@@ -11,7 +10,6 @@ class BookDetailPage extends StatefulWidget {
 }
 
 class _BookDetailPageState extends State<BookDetailPage> {
-  List<BookDetail> bookDetails = []; // List untuk menyimpan detail buku
 
   @override
   void initState() {
@@ -19,23 +17,6 @@ class _BookDetailPageState extends State<BookDetailPage> {
     _loadBookDetails();
   }
 
-  // Load existing book details or initialize if none exist
-  void _loadBookDetails() {
-    // Misalnya, inisialisasi list dengan detail buku
-    bookDetails = [
-      // BookDetail(
-      //   author: 'Keisha Ervin',
-      //   publishedDate: 'January 1, 2023',
-      //   genre: 'Poetry',
-      //   description: 'Description of Book 1.',
-      // ),
-      // BookDetail(
-      //   author: 'Bj Habibie',
-      //   publishedDate: 'March 2, 2023',
-      //   genre: 'Astronomy',
-      //   description: 'Description of Book 2.',
-      // ),
-    ];
   }
 
   void _addBook() {
@@ -44,13 +25,6 @@ class _BookDetailPageState extends State<BookDetailPage> {
       builder: (BuildContext context) {
         return AddBookDialog(
           onBookAdded: (author, genre, publishDate, description) {
-            setState(() {
-              bookDetails.add(BookDetail(
-                author: author,
-                publishedDate: publishDate,
-                genre: genre,
-                description: description,
-              ));
             });
           },
         );
@@ -65,13 +39,6 @@ class _BookDetailPageState extends State<BookDetailPage> {
         return EditBookDialog(
           initialBook: bookDetails[index],
           onBookUpdated: (author, genre, publishDate, description) {
-            setState(() {
-              bookDetails[index] = BookDetail(
-                author: author,
-                publishedDate: publishDate,
-                genre: genre,
-                description: description,
-              );
             });
           },
         );
@@ -80,8 +47,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
   }
 
   void _deleteBook(int index) {
-    setState(() {
-      bookDetails.removeAt(index);
+
     });
   }
 
@@ -89,7 +55,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Book Detail'), // Judul halaman detail buku
+        title: const Text('Book Detail'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -109,7 +75,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           bookDetails[index].author = value;
                         });
                       },
-                      textCapitalization: TextCapitalization.none,
+
                     ),
                     const SizedBox(height: 8),
                     TextFormField(
@@ -127,8 +93,6 @@ class _BookDetailPageState extends State<BookDetailPage> {
                             return Theme(
                               data: ThemeData.light().copyWith(
                                 colorScheme: ColorScheme.light().copyWith(
-                                  primary:
-                                      Colors.blue, // Your desired color here
                                 ),
                               ),
                               child: child!,
@@ -142,7 +106,6 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           });
                         }
                       },
-                      textCapitalization: TextCapitalization.none,
                     ),
                     const SizedBox(height: 8),
                     TextFormField(
@@ -153,7 +116,6 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           bookDetails[index].genre = value;
                         });
                       },
-                      textCapitalization: TextCapitalization.none,
                     ),
                     const SizedBox(height: 8),
                     TextFormField(
@@ -165,7 +127,6 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           bookDetails[index].description = value;
                         });
                       },
-                      textCapitalization: TextCapitalization.none,
                     ),
                     const SizedBox(height: 16),
                     Row(
@@ -197,14 +158,14 @@ class _BookDetailPageState extends State<BookDetailPage> {
   }
 }
 
-// Kelas untuk menyimpan detail buku
-class BookDetail {
+
   String author;
   String publishedDate;
   String genre;
   String description;
 
   BookDetail({
+
     this.author = '',
     this.publishedDate = '',
     this.genre = '',
@@ -212,8 +173,6 @@ class BookDetail {
   });
 }
 
-// Widget untuk menampilkan dialog tambah buku
-// Widget untuk menampilkan dialog tambah buku
 class AddBookDialog extends StatefulWidget {
   final Function(String, String, String, String) onBookAdded;
 
@@ -257,7 +216,6 @@ class _AddBookDialogState extends State<AddBookDialog> {
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.light().copyWith(
-              primary: Colors.blue, // Your desired color here
             ),
           ),
           child: child!,
@@ -291,7 +249,7 @@ class _AddBookDialogState extends State<AddBookDialog> {
               onSaved: (value) {
                 _author = value!;
               },
-              textCapitalization: TextCapitalization.none,
+
             ),
             const SizedBox(height: 8),
             TextFormField(
@@ -312,7 +270,6 @@ class _AddBookDialogState extends State<AddBookDialog> {
               onSaved: (value) {
                 _genre = value!;
               },
-              textCapitalization: TextCapitalization.none,
             ),
             const SizedBox(height: 8),
             TextFormField(
@@ -326,7 +283,6 @@ class _AddBookDialogState extends State<AddBookDialog> {
               onSaved: (value) {
                 _description = value!;
               },
-              textCapitalization: TextCapitalization.none,
             ),
           ],
         ),
@@ -347,7 +303,6 @@ class _AddBookDialogState extends State<AddBookDialog> {
   }
 }
 
-// Widget untuk menampilkan dialog edit buku
 class EditBookDialog extends StatefulWidget {
   final BookDetail initialBook;
   final Function(String, String, String, String) onBookUpdated;
@@ -409,13 +364,11 @@ class _EditBookDialogState extends State<EditBookDialog> {
             TextFormField(
               controller: _authorController,
               decoration: const InputDecoration(labelText: 'Author'),
-              textCapitalization: TextCapitalization.none,
             ),
             const SizedBox(height: 8),
             TextFormField(
               controller: _publishedDateController,
               decoration: const InputDecoration(labelText: 'Published Date'),
-              textCapitalization: TextCapitalization.none,
               readOnly: true,
               onTap: () async {
                 final DateTime? pickedDate = await showDatePicker(
@@ -427,7 +380,7 @@ class _EditBookDialogState extends State<EditBookDialog> {
                     return Theme(
                       data: ThemeData.light().copyWith(
                         colorScheme: ColorScheme.light().copyWith(
-                          primary: Colors.blue, // Your desired color here
+
                         ),
                       ),
                       child: child!,
@@ -446,13 +399,13 @@ class _EditBookDialogState extends State<EditBookDialog> {
             TextFormField(
               controller: _genreController,
               decoration: const InputDecoration(labelText: 'Genre'),
-              textCapitalization: TextCapitalization.none,
+
             ),
             const SizedBox(height: 8),
             TextFormField(
               controller: _descriptionController,
               decoration: const InputDecoration(labelText: 'Description'),
-              textCapitalization: TextCapitalization.none,
+
             ),
           ],
         ),
