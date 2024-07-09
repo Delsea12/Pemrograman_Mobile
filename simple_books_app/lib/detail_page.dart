@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BookDetailPage extends StatefulWidget {
   final String bookTitle;
@@ -11,7 +10,6 @@ class BookDetailPage extends StatefulWidget {
 }
 
 class _BookDetailPageState extends State<BookDetailPage> {
-  List<BookDetail> bookDetails = [];
 
   @override
   void initState() {
@@ -19,25 +17,6 @@ class _BookDetailPageState extends State<BookDetailPage> {
     _loadBookDetails();
   }
 
-  void _loadBookDetails() async {
-    FirebaseFirestore.instance
-        .collection('books')
-        .doc(widget.bookTitle)
-        .collection('details')
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      setState(() {
-        bookDetails = querySnapshot.docs.map((doc) {
-          return BookDetail(
-            id: doc.id,
-            author: doc['author'],
-            publishedDate: doc['publishedDate'],
-            genre: doc['genre'],
-            description: doc['description'],
-          );
-        }).toList();
-      });
-    });
   }
 
   void _addBook() {
@@ -46,25 +25,6 @@ class _BookDetailPageState extends State<BookDetailPage> {
       builder: (BuildContext context) {
         return AddBookDialog(
           onBookAdded: (author, genre, publishDate, description) {
-            FirebaseFirestore.instance
-                .collection('books')
-                .doc(widget.bookTitle)
-                .collection('details')
-                .add({
-              'author': author,
-              'publishedDate': publishDate,
-              'genre': genre,
-              'description': description,
-            }).then((DocumentReference docRef) {
-              setState(() {
-                bookDetails.add(BookDetail(
-                  id: docRef.id,
-                  author: author,
-                  publishedDate: publishDate,
-                  genre: genre,
-                  description: description,
-                ));
-              });
             });
           },
         );
@@ -79,26 +39,6 @@ class _BookDetailPageState extends State<BookDetailPage> {
         return EditBookDialog(
           initialBook: bookDetails[index],
           onBookUpdated: (author, genre, publishDate, description) {
-            FirebaseFirestore.instance
-                .collection('books')
-                .doc(widget.bookTitle)
-                .collection('details')
-                .doc(bookDetails[index].id)
-                .update({
-              'author': author,
-              'publishedDate': publishDate,
-              'genre': genre,
-              'description': description,
-            }).then((_) {
-              setState(() {
-                bookDetails[index] = BookDetail(
-                  id: bookDetails[index].id,
-                  author: author,
-                  publishedDate: publishDate,
-                  genre: genre,
-                  description: description,
-                );
-              });
             });
           },
         );
@@ -107,16 +47,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
   }
 
   void _deleteBook(int index) {
-    FirebaseFirestore.instance
-        .collection('books')
-        .doc(widget.bookTitle)
-        .collection('details')
-        .doc(bookDetails[index].id)
-        .delete()
-        .then((_) {
-      setState(() {
-        bookDetails.removeAt(index);
-      });
+
     });
   }
 
@@ -144,6 +75,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           bookDetails[index].author = value;
                         });
                       },
+
                     ),
                     const SizedBox(height: 8),
                     TextFormField(
@@ -161,7 +93,6 @@ class _BookDetailPageState extends State<BookDetailPage> {
                             return Theme(
                               data: ThemeData.light().copyWith(
                                 colorScheme: ColorScheme.light().copyWith(
-                                  primary: Colors.blue,
                                 ),
                               ),
                               child: child!,
@@ -227,15 +158,14 @@ class _BookDetailPageState extends State<BookDetailPage> {
   }
 }
 
-class BookDetail {
-  String id;
+
   String author;
   String publishedDate;
   String genre;
   String description;
 
   BookDetail({
-    this.id = '',
+
     this.author = '',
     this.publishedDate = '',
     this.genre = '',
@@ -286,7 +216,6 @@ class _AddBookDialogState extends State<AddBookDialog> {
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.light().copyWith(
-              primary: Colors.blue,
             ),
           ),
           child: child!,
@@ -320,6 +249,7 @@ class _AddBookDialogState extends State<AddBookDialog> {
               onSaved: (value) {
                 _author = value!;
               },
+
             ),
             const SizedBox(height: 8),
             TextFormField(
@@ -450,7 +380,7 @@ class _EditBookDialogState extends State<EditBookDialog> {
                     return Theme(
                       data: ThemeData.light().copyWith(
                         colorScheme: ColorScheme.light().copyWith(
-                          primary: Colors.blue,
+
                         ),
                       ),
                       child: child!,
@@ -469,11 +399,13 @@ class _EditBookDialogState extends State<EditBookDialog> {
             TextFormField(
               controller: _genreController,
               decoration: const InputDecoration(labelText: 'Genre'),
+
             ),
             const SizedBox(height: 8),
             TextFormField(
               controller: _descriptionController,
               decoration: const InputDecoration(labelText: 'Description'),
+
             ),
           ],
         ),
