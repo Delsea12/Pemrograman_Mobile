@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simple_books_app/detail_page.dart'; // Import halaman baru
+import 'package:simple_books_app/detail_page.dart';
 
 class BookListPage extends StatelessWidget {
   final String pageTitle;
@@ -42,10 +42,10 @@ class BookListPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Image.asset(
-            'assets/images/Book_${index + 1}.jpeg', // Jalur file gambar dengan indeks
-            height: 100, // Tinggi gambar
-            width: double.infinity, // Lebar gambar mengisi seluruh card
-            fit: BoxFit.cover, // Menyesuaikan gambar dengan ukuran card
+            'assets/images/Book_${index + 1}.jpeg',
+            height: 100,
+            width: double.infinity,
+            fit: BoxFit.cover,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -59,12 +59,8 @@ class BookListPage extends StatelessWidget {
             ),
           ),
           ElevatedButton(
-            // Tambahkan tombol
             onPressed: () {
-              _navigateToBookDetailPage(
-                  context,
-                  bookTitles[
-                      index]); // Navigasi ke halaman baru dengan judul buku
+              _navigateToBookDetailPage(context, bookTitles[index]);
             },
             child: const Text('View Details'),
           ),
@@ -77,8 +73,7 @@ class BookListPage extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => BookDetailPage(
-            bookTitle: bookTitle), // Navigasi ke halaman baru dengan judul buku
+        builder: (context) => BookDetailPage(bookTitle: bookTitle),
       ),
     );
   }

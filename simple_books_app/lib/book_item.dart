@@ -7,12 +7,13 @@ class BookItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // var headline6;
     return Card(
       elevation: 3,
       child: Center(
         child: Text(
           'Book ${index + 1}',
-          style: Theme.of(context).textTheme.headline6!.copyWith(
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
                 color: Colors.black,
               ),
         ),
